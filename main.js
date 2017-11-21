@@ -57,7 +57,12 @@
 let $box1 = $('#box1');
 let $box2 = $('#box2');
 let $box3 = $('#box3');
-let tl = new TimelineLite({onUpdate: updateSlider});
+let $boxes = $('.box');
+let $buttons = $('button');
+let tl = new TimelineLite({onUpdate: updateSlider, paused: true});
+let $dots = $('.dot');
+let $loader = $('#loader');
+let tlLoader = new TimelineMax({repeat: 2, onComplete: loadContent});
 
 // 2. Create tweens for our boxes
 
@@ -67,10 +72,12 @@ let tl = new TimelineLite({onUpdate: updateSlider});
 
 // 3. Add Tweens to Timeline
 
-tl.from($box1, 1, {y: '-=40', autoAlpha: 0, ease:Power4.easeInOut}) // no comma or semi-colon
-  .from($box2, 1, {y: '-=40', autoAlpha: 0, ease:Power4.easeInOut}, '+= 0.5') // no comma or semi-colon
-  .from($box3, 1, {y: '-=40', autoAlpha: 0, ease:Power4.easeInOut}); // semi-colon after last tween
-
+/*tl.from($box1, 1, {y: '-=40', autoAlpha: 0, ease:Power4.easeInOut}) 
+  .from($box2, 1, {y: '-=40', autoAlpha: 0, ease:Power4.easeInOut})
+  .add('moveAway')
+  .from($box3, 1, {y: '-=40', autoAlpha: 0, ease:Power4.easeInOut})
+  .to([$box1, $box2], 1, {x: '-= 100', ease:Power1.easinInOut}, 'moveAway');
+*/
 // 4. Create a Slider to Control Playback
 
 $('#slider').slider({
@@ -89,5 +96,87 @@ $('#slider').slider({
 function updateSlider() {
   $('#slider').slider('value', tl.progress() * 100);
 };
+
+
+// 5. staggerFrom(), staggerTo() and staggerFromTo() methods
+
+// tl.staggerFrom($boxes, 1, {y: '-=40', autoAlpha: 0, ease:Power4.easeInOut}, 0.5)
+//   .staggerTo($boxes, 1, {x: -250, autoAlpha: 0, ease: Power4.easeInOut, clearProps: 'x'}, 0.5)
+//   .staggerFromTo($boxes, 1, {y: '+=40', immediateRender: false}, {rotation: 45, transformOrigin: 'top right', autoAlpha: 1, ease: Power4.easeInOut}, 0.5)
+
+  tl.staggerFrom('.list li', 0.25, 
+    {opacity: 0, 
+      cycle: {
+      x: function(i) {
+        return (i + 1) * 50;
+      },
+      ease: function(i) {
+        return Back.easeOut.config(i * 0.3);
+      }
+    }
+  }, 0.5)
+  .staggerFrom($buttons, 0.2,
+    {cycle: {
+      x: [50, -50],
+      scale: [2, 0.5]
+    }, autoAlpha: 0, ease: Power1.easeOut},
+    0.25
+  );
+
+$('#btnPlay').on('click', function () {
+  tl.play();
+});
+
+$('#btnPause').on('click', function () {
+  tl.pause();
+});
+
+$('#btnResume').on('click', function () {
+  tl.resume();
+});
+
+$('#btnReverse').on('click', function () {
+  tl.reverse();
+});
+
+$('#btnSpeedUp').on('click', function () {
+  tl.timeScale(2);
+});
+
+$('#btnSlowDown').on('click', function () {
+  tl.timeScale(0.5);
+});
+
+$('#btnSeek').on('click', function () {
+  tl.seek(1.5);
+});
+
+$('#btnProgress').on('click', function () {
+  tl.progress(0.5);
+});
+
+$('#btnRestart').on('click', function () {
+  tl.restart(1);
+});
+
+// Loader Timeline
+tlLoader
+  .staggerFromTo($dots, 0.3, 
+    {y: 0, autoAlpha: 0},
+    {y: 20, autoAlpha: 1, ease: Back.easeInOut},
+    0.25
+  )
+  .fromTo(loader, 0.3,
+    {autoAlpha: 1, scale: 1.3},
+    {autoAlpha: 0, scale: 1, ease: Power0.easeNone},
+    0.9
+  );
+
+function loadContent() {
+  console.log('Finish loading')
+}
+
+
+
 
 

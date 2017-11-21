@@ -7,6 +7,13 @@
   <link rel="stylesheet" href="node_modules/jquery-ui-dist/jquery-ui.min.css">
 </head>
 <body>
+  <div id="loader">
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+  </div>
+
   <div id="box1" class="box">
     <div class="boxSmall"></div>
     <div class="boxSmall boxTiny"></div>
@@ -24,11 +31,35 @@
     <div id="slider"></div>
   </div>
 
+<ul class="list">
+  <li>Lorem ipsum dolor sit amet.</li>
+  <li>Lorem ipsum dolor sit amet.</li>
+  <li>Lorem 12</li>
+  <li>lorem 1</li>
+  <li>lorem 2</li>
+  <li>lorem 3</li>
+  <li>lorem 4</li>
+  <li>lorem 5</li>
+  <li>lorem 10</li>
+</ul>
+
+<div class="buttons">
+  <button id="btnPlay">Play</button>
+  <button id="btnPause">Pause</button>
+  <button id="btnResume">Resume</button>
+  <button id="btnReverse">Reverse</button>
+  <button id="btnSpeedUp">Speed Up</button>
+  <button id="btnSlowDown">Slow Down</button>
+  <button id="btnSeek">Seek</button>
+  <button id="btnProgress">Go to 50%</button>
+  <button id="btnRestart">Restart</button>
+</div>
   
   <script src="node_modules/jquery/dist/jquery.min.js"></script>
   <script src="node_modules/jquery-ui-dist/jquery-ui.min.js"></script>
   <script src="node_modules/gsap/src/minified/TweenLite.min.js"></script>
   <script src="node_modules/gsap/src/minified/TimelineLite.min.js"></script>
+  <script src="node_modules/gsap/src/minified/TimelineMax.min.js"></script>
   <script src="node_modules/gsap/src/minified/plugins/CSSPlugin.min.js"></script>
   <script src="node_modules/gsap/src/minified/easing/EasePack.min.js"></script>
   <script src="main.js"></script>
